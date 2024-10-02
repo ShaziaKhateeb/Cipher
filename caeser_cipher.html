@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encrypt and Decrypt Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 50px;
+            text-align: center;
+        }
+        .container {
+            width: 50%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        }
+        input[type="text"], input[type="number"] {
+            padding: 10px;
+            width: 90%;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 10px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Encrypt and Decrypt Message</h1>
+
+        <input type="text" id="textInput" placeholder="Enter your message here">
+        <input type="number" id="shiftInput" placeholder="Enter shift value" min="0" max="25">
+        <br>
+
+        <button onclick="encryptMessage()">Encrypt</button>
+        <button onclick="decryptMessage()">Decrypt</button>
+
+        <div class="result" id="output"></div>
+    </div>
+
+    <script>
+        // Caesar Cipher Encryption
+        function encryptMessage() {
+            let text = document.getElementById('textInput').value;
+            let shift = parseInt(document.getElementById('shiftInput').value);
+            let result = '';
+
+            for (let i = 0; i < text.length; i++) {
+                let char = text[i];
+
+                if (char.match(/[A-Z]/)) {
+                    result += String.fromCharCode((char.charCodeAt(0) - 65 + shift) % 26 + 65);
+                } else if (char.match(/[a-z]/)) {
+                    result += String.fromCharCode((char.charCodeAt(0) - 97 + shift) % 26 + 97);
+                } else {
+                    result += char; // Non-alphabetic characters remain the same
+                }
+            }
+
+            document.getElementById('output').textContent = 'Encrypted: ' + result;
+        }
+        function decryptMessage() {
+            let text = document.getElementById('textInput').value;
+            let shift = parseInt(document.getElementById('shiftInput').value);
+            let result = '';
+
+            for (let i = 0; i < text.length; i++) {
+                let char = text[i];
+
+                if (char.match(/[A-Z]/)) {
+                    result += String.fromCharCode((char.charCodeAt(0) - 65 - shift + 26) % 26 + 65);
+                } else if (char.match(/[a-z]/)) {
+                    result += String.fromCharCode((char.charCodeAt(0) - 97 - shift + 26) % 26 + 97);
+                } else {
+                    result += char;
+                }
+            }
+
+            document.getElementById('output').textContent = 'Decrypted: ' + result;
+        }
+    </script>
+
+</body>
+</html>
